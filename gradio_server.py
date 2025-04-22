@@ -991,6 +991,16 @@ def generate_video(
                 with open(video_path.replace('.mp4', '.json'), 'w') as f:
                     json.dump(configs, f, indent=4)
 
+                # Save the reference image as jpeg format
+                if input_image_or_video_path is not None:
+                    try:
+                        if isinstance(input_image_or_video_path, list):
+                            input_image_or_video_path = input_image_or_video_path[0]
+                        image = Image.open(input_image_or_video_path)
+                        image.save(video_path.replace('.mp4', '.jpg'), 'JPEG')
+                    except Exception as e:
+                        print(f"Error saving reference image: {e}")
+
                 print(f"New video saved to Path: "+video_path)
                 file_list.append(video_path)
                 if video_no < total_video:
